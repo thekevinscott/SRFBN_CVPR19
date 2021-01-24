@@ -1,4 +1,5 @@
 import torch.utils.data
+from data.LR_dataset import LRDataset as D
 
 def create_dataloader(dataset, dataset_opt):
     phase = dataset_opt['phase']
@@ -14,13 +15,4 @@ def create_dataloader(dataset, dataset_opt):
         dataset, batch_size=batch_size, shuffle=shuffle, num_workers=num_workers, pin_memory=True)
 
 def create_dataset(dataset_opt):
-    mode = dataset_opt['mode'].upper()
-    if mode == 'LR':
-        from data.LR_dataset import LRDataset as D
-    elif mode == 'LRHR':
-        from data.LRHR_dataset import LRHRDataset as D
-    else:
-        raise NotImplementedError("Dataset [%s] is not recognized." % mode)
-    dataset = D(dataset_opt)
-    print('===> [%s] Dataset is created.' % (mode))
-    return dataset
+    return D(dataset_opt)
